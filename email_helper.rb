@@ -6,7 +6,9 @@ WEBHOOK_LOCATION = "http://localhost:3000/api/discourse_webhook"
 module Email
   module BuildEmailHelper
     def build_email(*builder_args)
-      hit_webhook(builder_args)
+      form_data = { 'user_email' => builder_args[0] }
+      form_data.merge!(builder_args[1])
+      hit_webhook(form_data)
     end
 
     def hit_webhook(post_params)
