@@ -1,7 +1,7 @@
 require 'uri'
 require 'net/http'
 
-WEBHOOK_LOCATION = "http://localhost:3000/api/discourse_webhook"
+WEBHOOK_LOCATION = ENV['DISCOURSE_WEBHOOK']
 
 module Email
   module BuildEmailHelper
