@@ -20,7 +20,7 @@ data used to build them to a webhook instead.
 ### Using a VPS?
 
 ```
-DISCOURSE_WEBHOOK="http://your_domain.com/api_endpoint"
+export DISCOURSE_WEBHOOK="http://your_domain.com/api_endpoint"
 rake plugin:install["https://github.com/jamesgecko/discourse-webhook-plugin.git"]
 ```
 
