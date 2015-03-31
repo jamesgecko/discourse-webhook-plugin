@@ -7,8 +7,12 @@ raise 'DISCOURSE_WEBHOOK not set' unless WEBHOOK_LOCATION
 module Email
   module BuildEmailHelper
     def build_email(*builder_args)
-      form_data = { 'user_email' => builder_args[0] }
-      form_data.merge!(builder_args[1])
+      form_data = {
+        'user_email'    => builder_args[0],
+        'topic_title'   => builder_args[1]['topic_title'],
+        'discourse_url' => builder_args[1]['url'],
+        'template'      => builder_args[1]['template']
+      }
       hit_webhook(form_data)
     end
 
@@ -16,7 +20,6 @@ module Email
       uri = URI(WEBHOOK_LOCATION)
       req = Net::HTTP::Post.new(uri.path)
       req.set_form_data(post_params)
-
       res = Net::HTTP.start(uri.hostname, uri.port) {|http| http.request(req) }
       case res
       when Net::HTTPSuccess, Net::HTTPRedirection
