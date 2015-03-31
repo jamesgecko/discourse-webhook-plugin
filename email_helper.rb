@@ -2,6 +2,7 @@ require 'uri'
 require 'net/http'
 
 WEBHOOK_LOCATION = ENV['DISCOURSE_WEBHOOK']
+raise 'DISCOURSE_WEBHOOK not set' unless WEBHOOK_LOCATION
 
 module Email
   module BuildEmailHelper
