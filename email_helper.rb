@@ -7,8 +7,12 @@ raise 'DISCOURSE_WEBHOOK not set' unless WEBHOOK_LOCATION
 module Email
   module BuildEmailHelper
     def build_email(*builder_args)
+      email = builder_args[0]
+      user = User.find_by_email(email)
       form_data = {
-        'user_email'    => builder_args[0],
+        'user_email'    => email,
+        'discourse_user_id'   => user.try(:id),
+        'discourse_user_name' => user.try(:username_lower),
         'topic_title'   => builder_args[1]['topic_title'],
         'discourse_url' => builder_args[1]['url'],
         'template'      => builder_args[1]['template']
