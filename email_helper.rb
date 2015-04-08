@@ -13,9 +13,9 @@ module Email
         'user_email'    => email,
         'discourse_user_id'   => user.try(:id),
         'discourse_user_name' => user.try(:username_lower),
-        'topic_title'   => builder_args[1]['topic_title'],
-        'discourse_url' => builder_args[1]['url'],
-        'template'      => builder_args[1]['template']
+        'topic_title'   => builder_args[1][:topic_title],
+        'discourse_url' => builder_args[1][:url],
+        'template'      => builder_args[1][:template]
       }
       hit_webhook(form_data)
     end
