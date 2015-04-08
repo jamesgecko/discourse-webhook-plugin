@@ -9,10 +9,12 @@ module Email
     def build_email(*builder_args)
       email = builder_args[0]
       user = User.find_by_email(email)
+      topic_title = Topic.find(builder_args[1][:topic_id]).try(:title) unless topic_title
       form_data = {
         'user_email'    => email,
         'discourse_user_id'   => user.try(:id),
         'discourse_user_name' => user.try(:username_lower),
+        'topic_title'   => topic_title,
         'topic_title'   => builder_args[1][:topic_title],
         'discourse_url' => builder_args[1][:url],
         'template'      => builder_args[1][:template]
