@@ -21,10 +21,12 @@ module Email
     end
 
     def hit_webhook(post_params)
-      uri = URI(WEBHOOK_LOCATION)
+      uri = URI.parse(WEBHOOK_LOCATION)
       req = Net::HTTP::Post.new(uri.path)
       req.set_form_data(post_params)
-      res = Net::HTTP.start(uri.hostname, uri.port) {|http| http.request(req) }
+      http = Net::HTTP.new(uri.hostname, uri.port)
+      http.use_ssl = true if WEBHOOK_LOCATION =~/^https/
+      res = http.request(req)
       case res
       when Net::HTTPSuccess, Net::HTTPRedirection
         Rails.logger.info res.value
